@@ -85,17 +85,11 @@ namespace computerVisionLab1
         private void CreateBitmapFromData(Graphics g, Bitmap bitmap)
         {
             
-
             for (int i = 0; i < data.Rows.Count; i++)
             {
-                for (int j = 0; j < data.Columns.Count; j++)
-                {
-                    
-                    FillNewPixel(g, data.Rows[i][0].ToString(), data.Rows[i][1].ToString(), data.Rows[i][2].ToString());
-                    
-                    
-                    //bitmap.SetPixel((int)(k*x), (int)(k*y), color);
-                }
+                FillNewPixel(g, data.Rows[i][0].ToString(), data.Rows[i][1].ToString(), data.Rows[i][2].ToString());
+                
+                    //bitmap.SetPixel((int)(k*x), (int)(k*y), color)
             }
 
             pictureBox1.Image = bitmap;
