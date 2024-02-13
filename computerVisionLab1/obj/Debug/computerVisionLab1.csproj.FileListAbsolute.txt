@@ -1,0 +1,10 @@
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\bin\Debug\computerVisionLab1.exe.config
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\bin\Debug\computerVisionLab1.exe
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\bin\Debug\computerVisionLab1.pdb
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\obj\Debug\computerVisionLab1.csproj.AssemblyReference.cache
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\obj\Debug\computerVisionLab1.Properties.Resources.resources
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\obj\Debug\computerVisionLab1.csproj.GenerateResource.cache
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\obj\Debug\computerVisionLab1.csproj.CoreCompileInputs.cache
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\obj\Debug\computerVisionLab1.exe
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\obj\Debug\computerVisionLab1.pdb
+C:\Users\user\RiderProjects\computerVisionLab1\computerVisionLab1\obj\Debug\computerVisionLab1.Form1.resources
