@@ -17,6 +17,7 @@ namespace computerVisionLab1
         private DataTable data;
         private string selectedValue = "0";
         private int radius;
+        private int hasOrNo = 0;
         public Form1()
         {
             InitializeComponent();    
@@ -166,11 +167,17 @@ namespace computerVisionLab1
 
         private void AddClusterToDataGrid()
         {
-            data.Columns.Add("кластеризация");
+            if (hasOrNo == 0)
+            {
+                data.Columns.Add("кластеризация");
+                hasOrNo = 1;
+            }
+
             foreach (DataRow row in data.Rows)
             {
-                row["кластеризация"] = 0;
+                row["кластер"] = 0;
             }
+            findClusters(); 
         }
 
         private void clusterButton_Click(object sender, EventArgs e)
@@ -182,42 +189,48 @@ namespace computerVisionLab1
 
         private void findClusters()
         {
-            int currentCluster = 0;
-            int currentX, currentY;
+            int currentX, currentY, cirrentI = 0, currentCluster = 0;
             int nullCenterX = int.Parse(data.Rows[0][0].ToString());
             int nullCenterY = int.Parse(data.Rows[0][1].ToString());
+            int nextCenterX = 0, nextCenterY = 0, block = 0;
+            data.Rows[0][3] = currentCluster;
 
-            data.Columns.Add("Кластер");
-            data.Rows[0][3] = currentCluster.ToString();
-            
-            for (int i = 1; i < data.Rows.Count; i++)
+            while (nullCenterX != nextCenterX && nullCenterY != nextCenterY)
             {
-                currentX = int.Parse(data.Rows[i][0].ToString());
-                currentY = int.Parse(data.Rows[i][1].ToString());
-                if (findDistance(nullCenterX, nullCenterY, currentX, currentY) < radius)
+                block = 0;
+                for (int i = cirrentI; i < data.Rows.Count; i++)
                 {
-                    data.Rows[i][3] = currentCluster.ToString();
+                    currentX = int.Parse(data.Rows[i][0].ToString());
+                    currentY = int.Parse(data.Rows[i][1].ToString());
+                    if (findDistance(nullCenterX, nullCenterY, currentX, currentY) < radius)
+                    {
+                        data.Rows[i][3] = currentCluster;
+                    }
+                    else
+                    {
+                        if (block == 0)
+                        {
+                            nextCenterX = currentX;
+                            nextCenterY = currentY;
+                            block = 1;
+                            
+                        }
+                    }
                 }
-                else
-                {
-                    currentCluster++;
-                    nullCenterX = currentX;
-                    nullCenterY = currentY;
-                    data.Rows[i][3] = currentCluster.ToString();
 
-                }
-            }
-
+                nullCenterX = nextCenterX;
+                nullCenterY = nextCenterY;
+            } 
         }
+        
 
-        int findDistance(int x1, int y1, int x2, int y2)
+    int findDistance(int x1, int y1, int x2, int y2)
         {
             return (int) Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow(y2 - y1, 2));
         }
         
         private void Form1_Load(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
         }
 
         private void textBoxRadius_TextChanged(object sender, EventArgs e)
