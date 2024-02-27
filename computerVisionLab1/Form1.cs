@@ -16,6 +16,7 @@ namespace computerVisionLab1
 
         private DataTable data;
         private string selectedValue = "0";
+        private int radius;
         public Form1()
         {
             InitializeComponent();    
@@ -161,6 +162,67 @@ namespace computerVisionLab1
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             throw new System.NotImplementedException();
+        }
+
+        private void AddClusterToDataGrid()
+        {
+            data.Columns.Add("кластеризация");
+            foreach (DataRow row in data.Rows)
+            {
+                row["кластеризация"] = 0;
+            }
+        }
+
+        private void clusterButton_Click(object sender, EventArgs e)
+        {
+            AddClusterToDataGrid();
+        }
+
+
+
+        private void findClusters()
+        {
+            int currentCluster = 0;
+            int currentX, currentY;
+            int nullCenterX = int.Parse(data.Rows[0][0].ToString());
+            int nullCenterY = int.Parse(data.Rows[0][1].ToString());
+
+            data.Columns.Add("Кластер");
+            data.Rows[0][3] = currentCluster.ToString();
+            
+            for (int i = 1; i < data.Rows.Count; i++)
+            {
+                currentX = int.Parse(data.Rows[i][0].ToString());
+                currentY = int.Parse(data.Rows[i][1].ToString());
+                if (findDistance(nullCenterX, nullCenterY, currentX, currentY) < radius)
+                {
+                    data.Rows[i][3] = currentCluster.ToString();
+                }
+                else
+                {
+                    currentCluster++;
+                    nullCenterX = currentX;
+                    nullCenterY = currentY;
+                    data.Rows[i][3] = currentCluster.ToString();
+
+                }
+            }
+
+        }
+
+        int findDistance(int x1, int y1, int x2, int y2)
+        {
+            return (int) Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow(y2 - y1, 2));
+        }
+        
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void textBoxRadius_TextChanged(object sender, EventArgs e)
+        {
+            radius = int.Parse(textBoxRadius.Text);
         }
     }
 }    
