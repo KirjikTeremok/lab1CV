@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace computerVisionLab1
@@ -18,6 +16,8 @@ namespace computerVisionLab1
         private string selectedValue = "0";
         private int radius;
         private int hasOrNo = 0;
+        List<int[]> cluters = new List<int[]>();
+        Bitmap bmp = new Bitmap(400, 400);
         public Form1()
         {
             InitializeComponent();    
@@ -46,7 +46,7 @@ namespace computerVisionLab1
                 data = openFile(openFileDialog.FileName);
                 dataGridView1.DataSource = data;
 
-                Bitmap bmp = new Bitmap(400, 400);
+                
                 Graphics g = Graphics.FromImage(bmp);
                 CreateBitmapFromData(g, bmp);
                 //pictureBox1.Image = bmp;
@@ -89,7 +89,10 @@ namespace computerVisionLab1
             
             for (int i = 0; i < data.Rows.Count; i++)
             {
-                FillNewPixel(g, data.Rows[i][0].ToString(), data.Rows[i][1].ToString(), data.Rows[i][2].ToString());
+                string z = data.Rows[i][2].ToString();
+                int Z = int.Parse(z);
+                Color color = Color.FromArgb(Z, Z, Z);
+                FillNewPixel(g, int.Parse(data.Rows[i][0].ToString()), int.Parse(data.Rows[i][1].ToString()), color);
                 
                     //bitmap.SetPixel((int)(k*x), (int)(k*y), color)
             }
@@ -99,21 +102,21 @@ namespace computerVisionLab1
             // return bitmap;
         }
 
-        private void FillNewPixel(Graphics g, string x, string y, string z)
+        private void FillNewPixel(Graphics g, int x, int y, Color c)
         {
             float k = (float)400 / 1024;
             Rectangle r = new Rectangle();
-            int X = int.Parse(x);
-            int Y = int.Parse(y);
-            int Z = int.Parse(z);
+            
             r.Width = 3;
             r.Height = 3;
-            r.X = (int)(X * k);
-            r.Y = (int)(Y * k);
-            Color color = Color.FromArgb(Z, Z, Z);
-            Brush brush = new SolidBrush(color);
+            r.X = (int)(x * k);
+            r.Y = (int)(y * k);
+            
+            Brush brush = new SolidBrush(c);
             g.FillRectangle(brush, r);
         }
+
+        
         
         private void label4_Click(object sender, EventArgs e)
         {
@@ -152,7 +155,7 @@ namespace computerVisionLab1
 
         private void downloadPoint(string a, string b, string c)
         {
-            StreamWriter sw = new StreamWriter("C:\\Users\\user\\Documents\\КириллТерещенко\\вуз\\шарпы\\ComputerVision\\data.csv", true, Encoding.ASCII);
+            StreamWriter sw = new StreamWriter("C:\\Users\\user\\Documents\\KirillTereshchenko\\вуз\\шарпы\\ComputerVision\\data.csv", true, Encoding.ASCII);
             if (a != null && b != null && c != null)
             {
                 sw.WriteLine($"{a} {b} {c}");
@@ -162,14 +165,13 @@ namespace computerVisionLab1
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
         }
 
         private void AddClusterToDataGrid()
         {
             if (hasOrNo == 0)
             {
-                data.Columns.Add("кластеризация");
+                data.Columns.Add("кластер");
                 hasOrNo = 1;
             }
 
@@ -189,16 +191,63 @@ namespace computerVisionLab1
 
         private void findClusters()
         {
+            Graphics g = Graphics.FromImage(bmp);
+            int currentX, currentY, currentCluster = 0;
+            Random r = new Random();
+            Color c = new Color();
+            c = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
+            int nullCenterX = int.Parse(data.Rows[0][0].ToString());
+            int nullCenterY = int.Parse(data.Rows[0][1].ToString());
+            cluters.Add(new []{nullCenterX, nullCenterY, currentCluster,});
+            int[] cluster;
+            for (int i = 1; i < data.Rows.Count; i++)
+            {
+                currentX = int.Parse(data.Rows[i][0].ToString());
+                currentY = int.Parse(data.Rows[i][1].ToString());
+                int len = cluters.Count;
+                int count = 0;
+                int findPixelInCluter = 0;
+                while (len > 0)
+                {
+                    cluster = cluters[count];
+                    if (findDistance(cluster[0], cluster[1], currentX, currentY) <= radius)
+                    {
+                        data.Rows[i][3] = cluster[2];
+                        findPixelInCluter = 1;
+                        FillNewPixel(g, currentX, currentY, c);
+                    }
+                    
+                    count++;
+                    len--;
+                }
+
+                if (findPixelInCluter == 1)
+                {
+                    currentCluster++;
+                    c = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
+                    
+                }
+                
+                
+            }
+            pictureBox1.Image = bmp;
+            
+        }
+
+        /*private void findClusters() // раздаем каждой точке номер кластера
+        {
+            bool findNewCluster = true; // определяет есть ли еще новые кластеры (для продолжения цикла)
             int currentX, currentY, cirrentI = 0, currentCluster = 0;
             int nullCenterX = int.Parse(data.Rows[0][0].ToString());
             int nullCenterY = int.Parse(data.Rows[0][1].ToString());
             int nextCenterX = 0, nextCenterY = 0, block = 0;
             data.Rows[0][3] = currentCluster;
 
-            while (nullCenterX != nextCenterX && nullCenterY != nextCenterY)
+            while (findNewCluster)
             {
+                findNewCluster = false;
                 block = 0;
-                for (int i = cirrentI; i < data.Rows.Count; i++)
+                for (int i = 1; i < data.Rows.Count; i++)
                 {
                     currentX = int.Parse(data.Rows[i][0].ToString());
                     currentY = int.Parse(data.Rows[i][1].ToString());
@@ -213,15 +262,16 @@ namespace computerVisionLab1
                             nextCenterX = currentX;
                             nextCenterY = currentY;
                             block = 1;
-                            
                         }
+
+                        findNewCluster = true;
                     }
                 }
 
                 nullCenterX = nextCenterX;
                 nullCenterY = nextCenterY;
             } 
-        }
+        }*/
         
 
     int findDistance(int x1, int y1, int x2, int y2)
