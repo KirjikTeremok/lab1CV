@@ -17,6 +17,7 @@ namespace computerVisionLab1
         private int radius;
         private int hasOrNo = 0;
         List<int[]> cluters = new List<int[]>();
+        List<Color> colorCluster = new List<Color>();
         Bitmap bmp = new Bitmap(400, 400);
         public Form1()
         {
@@ -39,6 +40,7 @@ namespace computerVisionLab1
         private void btnLoad_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "C:\\Users\\user\\Documents\\KirillTereshchenko\\вуз\\шарпы\\ComputerVision";
             openFileDialog.Filter = "CSV files (*.csv)|*.csv";
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -196,36 +198,33 @@ namespace computerVisionLab1
             Random r = new Random();
             Color c = new Color();
             c = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
+            colorCluster.Add(c);
             int nullCenterX = int.Parse(data.Rows[0][0].ToString());
             int nullCenterY = int.Parse(data.Rows[0][1].ToString());
             cluters.Add(new []{nullCenterX, nullCenterY, currentCluster,});
-            int[] cluster;
             for (int i = 1; i < data.Rows.Count; i++)
             {
                 currentX = int.Parse(data.Rows[i][0].ToString());
                 currentY = int.Parse(data.Rows[i][1].ToString());
-                int len = cluters.Count;
-                int count = 0;
                 int findPixelInCluter = 0;
-                while (len > 0)
+                
+                foreach (var cluster in cluters)
                 {
-                    cluster = cluters[count];
                     if (findDistance(cluster[0], cluster[1], currentX, currentY) <= radius)
                     {
                         data.Rows[i][3] = cluster[2];
                         findPixelInCluter = 1;
-                        FillNewPixel(g, currentX, currentY, c);
+                        FillNewPixel(g, currentX, currentY, colorCluster[cluster[2]]);
                     }
-                    
-                    count++;
-                    len--;
                 }
 
-                if (findPixelInCluter == 1)
+                if (findPixelInCluter == 0)
                 {
                     currentCluster++;
                     c = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
-                    
+                    colorCluster.Add(c);
+                    cluters.Add(new []{currentX, currentY, currentCluster});
+                    data.Rows[i][3] = currentCluster;
                 }
                 
                 
