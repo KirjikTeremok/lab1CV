@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -18,6 +17,7 @@ namespace computerVisionLab1
         private int hasOrNo = 0;
         List<int[]> cluters = new List<int[]>();
         List<Color> colorCluster = new List<Color>();
+        float k = (float)400 / 1024;
         public Form1()
         {
             InitializeComponent();    
@@ -106,7 +106,7 @@ namespace computerVisionLab1
 
         private void FillNewPixel(Graphics g, int x, int y, Color c)
         {
-            float k = (float)400 / 1024;
+            
             Rectangle r = new Rectangle();
             
             r.Width = 3;
@@ -210,11 +210,14 @@ namespace computerVisionLab1
                 currentX = int.Parse(data.Rows[i][0].ToString());
                 currentY = int.Parse(data.Rows[i][1].ToString());
                 int findPixelInCluter = 0;
-                
+                int distance = 0;
                 foreach (var cluster in cluters)
                 {
-                    if (findDistance(cluster[0], cluster[1], currentX, currentY) <= radius)
+                    distance = findDistance(cluster[0], cluster[1], currentX, currentY);
+                    //MessageBox.Show($"{radius}, {distance}");
+                    if (distance <= radius)
                     {
+                        
                         data.Rows[i][3] = cluster[2];
                         findPixelInCluter = 1;
                         FillNewPixel(gr, currentX, currentY, colorCluster[cluster[2]]);
@@ -228,6 +231,7 @@ namespace computerVisionLab1
                     colorCluster.Add(c);
                     cluters.Add(new []{currentX, currentY, currentCluster});
                     data.Rows[i][3] = currentCluster;
+                    
                 }
                 
                 
@@ -243,7 +247,7 @@ namespace computerVisionLab1
 
         private void drawEllipse(Graphics g,Color color, int x, int y)
         {
-            float k = (float)400 / 1024;
+            
             //Brush brush = new SolidBrush(color);
             Pen pen = new Pen(color);
             g.DrawEllipse(pen, (int)(x*k) - radius, (int)(y*k) - radius, radius*2, radius*2);   
@@ -253,7 +257,7 @@ namespace computerVisionLab1
 
     int findDistance(int x1, int y1, int x2, int y2)
         {
-            return (int) Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow(y2 - y1, 2));
+            return (int) Math.Sqrt(Math.Pow(k*(x2-x1), 2) + Math.Pow(k*(y2 - y1), 2));
         }
         
         private void Form1_Load(object sender, EventArgs e)
