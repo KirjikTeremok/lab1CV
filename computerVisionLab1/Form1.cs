@@ -51,9 +51,7 @@ namespace computerVisionLab1
                 Graphics g = Graphics.FromImage(bmp);
                
                 CreateBitmapFromData(g, bmp);
-                //pictureBox1.Image = bmp;
             }
-
         }
 
 
@@ -241,6 +239,7 @@ namespace computerVisionLab1
             {
                 drawEllipse(gr ,colorCluster[i], cluters[i][0], cluters[i][1]);
             }
+            drawNumberInCluster(gr);
             pictureBox1.Image = bitmap;
             
         }
@@ -252,12 +251,38 @@ namespace computerVisionLab1
             Pen pen = new Pen(color);
             g.DrawEllipse(pen, (int)(x*k) - radius, (int)(y*k) - radius, radius*2, radius*2);   
         }
-
         
 
-    int findDistance(int x1, int y1, int x2, int y2)
+        int findDistance(int x1, int y1, int x2, int y2)
         {
             return (int) Math.Sqrt(Math.Pow(k*(x2-x1), 2) + Math.Pow(k*(y2 - y1), 2));
+        }
+
+
+        void lineBestPos()
+        {
+            int sumXY = 0, sumX = 0, sumY = 0, sumx2 = 0;
+            int x, y, yResult, xResult;
+            
+            for (int i = 0; i < data.Rows.Count; i++)
+            {
+                x = int.Parse(data.Rows[i][0].ToString());
+                y = int.Parse(data.Rows[i][1].ToString());
+                sumX += x;
+                sumX += y;
+                sumx2 += x * x;
+                sumXY += x * y;
+            }
+        }
+
+
+        void drawNumberInCluster(Graphics g)
+        {
+            for (int i = 0; i < cluters.Count; i++) {
+                Brush p = new SolidBrush(colorCluster[i]);
+                Point drawPoint = new Point(cluters[i][0], cluters[i][1]);
+                g.DrawString(cluters[i][2].ToString(), new Font("Arial", 6), p, drawPoint);
+            }
         }
         
         private void Form1_Load(object sender, EventArgs e)
