@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -51,6 +52,7 @@ namespace computerVisionLab1
                 Graphics g = Graphics.FromImage(bmp);
                
                 CreateBitmapFromData(g, bmp);
+                g.Dispose(); /////////////////////////////////////////////////////////////////////////////////
             }
         }
 
@@ -231,8 +233,7 @@ namespace computerVisionLab1
                     data.Rows[i][3] = currentCluster;
                     
                 }
-                
-                
+
             }
 
             for (int i = 0; i < colorCluster.Count; i++)
@@ -240,7 +241,10 @@ namespace computerVisionLab1
                 drawEllipse(gr ,colorCluster[i], cluters[i][0], cluters[i][1]);
             }
             drawNumberInCluster(gr);
+            lineBestPos(gr);
+            gr.Dispose();
             pictureBox1.Image = bitmap;
+            //gr.Clear(pictureBox1.BackColor);
             
         }
 
@@ -259,29 +263,51 @@ namespace computerVisionLab1
         }
 
 
-        void lineBestPos()
+        void lineBestPos(Graphics gr)
         {
-            int sumXY = 0, sumX = 0, sumY = 0, sumx2 = 0;
-            int x, y, yResult, xResult;
+            int n = data.Rows.Count;
+            double sumXY = 0, sumX = 0, sumY = 0, sumx2 = 0;
+            double x, y;
             
             for (int i = 0; i < data.Rows.Count; i++)
             {
-                x = int.Parse(data.Rows[i][0].ToString());
-                y = int.Parse(data.Rows[i][1].ToString());
+                x = k * double.Parse(data.Rows[i][0].ToString());
+                y = k * double.Parse(data.Rows[i][1].ToString());
                 sumX += x;
-                sumX += y;
+                sumY += y;
                 sumx2 += x * x;
                 sumXY += x * y;
             }
+
+            double a = (n * sumXY - sumX * sumY) / (n * sumx2 - sumX * sumX);
+            double b = (sumY - a * sumX) / n;
+
+            double avgX = sumX / n;
+            double avgY = sumY / n;
+            
+            Pen pen = new Pen(Color.Red, 2);
+            Pen pen2 = new Pen(Color.Blue, 2);
+            //double x1 = cluters[0][0];
+            //double y1 = a * x1 + b;
+            
+            Point p1 = new Point((int)avgX, 0);
+            Point p2 = new Point((int)avgX, pictureBox1.Height);
+            gr.DrawLine(pen2, p1, p2);
+            p1 = new Point(0, (int)avgY);
+            p2 = new Point(pictureBox1.Width, (int)avgY);
+            gr.DrawLine(pen2, p1, p2);
+
+            pen.Dispose();
+
         }
 
 
-        void drawNumberInCluster(Graphics g)
+        void drawNumberInCluster(Graphics grt)
         {
+            Brush p = new SolidBrush(Color.Black);
             for (int i = 0; i < cluters.Count; i++) {
-                Brush p = new SolidBrush(colorCluster[i]);
-                Point drawPoint = new Point(cluters[i][0], cluters[i][1]);
-                g.DrawString(cluters[i][2].ToString(), new Font("Arial", 6), p, drawPoint);
+                Point drawPoint = new Point((int)(cluters[i][0] * k), (int)(cluters[i][1] * k));
+                grt.DrawString(cluters[i][2].ToString(), new Font("Arial", 6), p, drawPoint);
             }
         }
         
