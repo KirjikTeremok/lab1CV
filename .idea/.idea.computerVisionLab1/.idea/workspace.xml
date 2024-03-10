@@ -15,12 +15,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f112ebad-c64a-4457-8e32-fd89b63ca891" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.computerVisionLab1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.computerVisionLab1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/computerVisionLab1/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/computerVisionLab1/Form1.Designer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/computerVisionLab1/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/computerVisionLab1/Form1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/computerVisionLab1/bin/Debug/computerVisionLab1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/computerVisionLab1/bin/Debug/computerVisionLab1.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/computerVisionLab1/bin/Debug/computerVisionLab1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/computerVisionLab1/bin/Debug/computerVisionLab1.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/computerVisionLab1/obj/Debug/computerVisionLab1.exe" beforeDir="false" afterPath="$PROJECT_DIR$/computerVisionLab1/obj/Debug/computerVisionLab1.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/computerVisionLab1/obj/Debug/computerVisionLab1.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/computerVisionLab1/obj/Debug/computerVisionLab1.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +108,7 @@
       <workItem from="1709482641965" duration="7028000" />
       <workItem from="1709629995811" duration="2871000" />
       <workItem from="1709907358804" duration="4184000" />
-      <workItem from="1710064778820" duration="9132000" />
+      <workItem from="1710064778820" duration="10375000" />
     </task>
     <servers />
   </component>
@@ -142,22 +137,22 @@
       <screen x="0" y="0" width="1739" height="978" />
     </state>
     <state width="436" height="464" key="DebuggerActiveHint/0.0.1739.978@0.0.1739.978" timestamp="1710066410904" />
-    <state width="1554" height="15" key="GridCell.Tab.0.bottom" timestamp="1710077737173">
+    <state width="1554" height="280" key="GridCell.Tab.0.bottom" timestamp="1710078185777">
       <screen x="0" y="0" width="1739" height="978" />
     </state>
-    <state width="1554" height="15" key="GridCell.Tab.0.bottom/0.0.1739.978@0.0.1739.978" timestamp="1710077737173" />
-    <state width="1554" height="15" key="GridCell.Tab.0.center" timestamp="1710077737173">
+    <state width="1554" height="280" key="GridCell.Tab.0.bottom/0.0.1739.978@0.0.1739.978" timestamp="1710078185777" />
+    <state width="1554" height="280" key="GridCell.Tab.0.center" timestamp="1710078185777">
       <screen x="0" y="0" width="1739" height="978" />
     </state>
-    <state width="1554" height="15" key="GridCell.Tab.0.center/0.0.1739.978@0.0.1739.978" timestamp="1710077737173" />
-    <state width="1554" height="15" key="GridCell.Tab.0.left" timestamp="1710077737173">
+    <state width="1554" height="280" key="GridCell.Tab.0.center/0.0.1739.978@0.0.1739.978" timestamp="1710078185777" />
+    <state width="1554" height="280" key="GridCell.Tab.0.left" timestamp="1710078185777">
       <screen x="0" y="0" width="1739" height="978" />
     </state>
-    <state width="1554" height="15" key="GridCell.Tab.0.left/0.0.1739.978@0.0.1739.978" timestamp="1710077737173" />
-    <state width="1554" height="15" key="GridCell.Tab.0.right" timestamp="1710077737173">
+    <state width="1554" height="280" key="GridCell.Tab.0.left/0.0.1739.978@0.0.1739.978" timestamp="1710078185777" />
+    <state width="1554" height="280" key="GridCell.Tab.0.right" timestamp="1710078185777">
       <screen x="0" y="0" width="1739" height="978" />
     </state>
-    <state width="1554" height="15" key="GridCell.Tab.0.right/0.0.1739.978@0.0.1739.978" timestamp="1710077737173" />
+    <state width="1554" height="280" key="GridCell.Tab.0.right/0.0.1739.978@0.0.1739.978" timestamp="1710078185777" />
     <state width="1554" height="204" key="GridCell.Tab.1.bottom" timestamp="1710066994408">
       <screen x="0" y="0" width="1739" height="978" />
     </state>
@@ -234,10 +229,10 @@
       <screen x="0" y="0" width="1739" height="978" />
     </state>
     <state x="500" y="143" key="ToolboxManager/0.0.1739.978@0.0.1739.978" timestamp="1707164367093" />
-    <state x="459" y="214" key="Vcs.Push.Dialog.v2" timestamp="1710011572829">
+    <state x="459" y="214" key="Vcs.Push.Dialog.v2" timestamp="1710078241994">
       <screen x="0" y="0" width="1739" height="978" />
     </state>
-    <state x="459" y="214" key="Vcs.Push.Dialog.v2/0.0.1739.978@0.0.1739.978" timestamp="1710011572829" />
+    <state x="459" y="214" key="Vcs.Push.Dialog.v2/0.0.1739.978@0.0.1739.978" timestamp="1710078241994" />
     <state x="673" y="394" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1710067523448">
       <screen x="0" y="0" width="1739" height="978" />
     </state>

@@ -296,7 +296,12 @@ namespace computerVisionLab1
             p1 = new Point(0, (int)avgY);
             p2 = new Point(pictureBox1.Width, (int)avgY);
             gr.DrawLine(pen2, p1, p2);
-
+            p1 = new Point(0, (int)(a * 0 + b));
+            p2 = new Point(400, (int)(a * 400 + b));
+            pen = new Pen(Color.Gold);
+            gr.DrawLine(pen, p1, p2);
+            
+            
             pen.Dispose();
 
         }
